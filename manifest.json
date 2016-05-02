@@ -1,0 +1,18 @@
+{
+  "name": "專注的力量",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "blocking time-wasting websites to make you focus on working",
+  "icons": { "1": "icon.jpg" },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "browser_action": {
+    "default_title": "專注的力量",
+    "default_icon": "icon.jpg"//,
+    //"default_popup": "popup.html"
+  }
+}
