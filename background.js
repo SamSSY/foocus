@@ -1,10 +1,24 @@
+const fbUrl = 'https://www.facebook.com/';
+const youtubeUrl = 'https://www.youtube.com/';
+
 chrome.tabs.query({/* active: true, lastFocusedWindow: true*/}, (arrayOfTabs) => {
-  // since only one tab should be active and in the current window at once
-  // the return variable should only have one entry
-  var activeTab = arrayOfTabs[0];
-  var activeTabId = activeTab.id; 
-  console.log(arrayOfTabs);
-  chrome.tabs.remove(arrayOfTabs[0].id, () => {
-    console.log("close tab[0]!");
-  });
+  for ( var i in arrayOfTabs) {
+    if (arrayOfTabs[i].url.indexOf(fbUrl) > -1 ||
+      arrayOfTabs[i].url.indexOf(youtubeUrl) > -1) {
+      chrome.tabs.remove(arrayOfTabs[i].id, () => {
+        console.log("close tab!");
+      });
+    }
+  }
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.url) {
+    if (changeInfo.url.indexOf(fbUrl) > -1 ||
+      changeInfo.url.indexOf(youtubeUrl) > -1) {
+      chrome.tabs.remove(tabId, () => {
+        console.log("close tab: " + changeInfo.url);
+      });
+    }
+  }
 });
